@@ -14,10 +14,17 @@ public class CameraMatricesTest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		CameraMatrices matrices = new CameraMatrices();
+        CameraMatrices matrices = new CameraMatrices();
 		if(_manager.TryGetCaptureCameraMatrices(ref matrices))
 		{
-			Debug.LogFormat(this, "[CameraMatricesTest] - We should have matrices, no idea about validity");
-		}
+            if (matrices.IsSet)
+            {
+                Debug.LogFormat(this, "[CameraMatricesTest] - We should have valid matrices");
+            }
+            else
+            {
+                Debug.LogFormat(this, "[CameraMatricesTest] - Got matrices, but NOT IsSet!!!");
+            }
+        }
 	}
 }

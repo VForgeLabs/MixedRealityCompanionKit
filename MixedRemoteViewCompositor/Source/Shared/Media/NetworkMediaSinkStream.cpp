@@ -1310,19 +1310,34 @@ HRESULT NetworkMediaSinkStreamImpl::FillStreamDescription(
 
 HRESULT NetworkMediaSinkStreamImpl::GetWorldToCameraMatrix(ABI::Windows::Foundation::Numerics::Matrix4x4 *m)
 {
-	*m = _worldToCameraMatrix;
-	return S_OK;
+	if (_state == SinkStreamState_Started)
+	{
+		*m = _worldToCameraMatrix;
+		return S_OK;
+	}
+
+	return E_ABORT;
 }
 
 HRESULT NetworkMediaSinkStreamImpl::GetCameraProjectionTransformMatrix(ABI::Windows::Foundation::Numerics::Matrix4x4 *m)
 {
-	*m = _cameraProjectionTransform;
-	return S_OK;
+	if (_state == SinkStreamState_Started)
+	{
+		*m = _cameraProjectionTransform;
+		return S_OK;
+	}
+
+	return E_ABORT;
 }
 
 HRESULT NetworkMediaSinkStreamImpl::GetCameraViewTransformMatrix(ABI::Windows::Foundation::Numerics::Matrix4x4 *m)
 {
-	*m = _cameraViewTransform;
-	return S_OK;
+	if (_state == SinkStreamState_Started)
+	{
+		*m = _cameraViewTransform;
+		return S_OK;
+	}
+
+	return E_ABORT;
 }
 

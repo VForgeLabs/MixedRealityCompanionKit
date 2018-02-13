@@ -14,6 +14,25 @@ namespace MixedRemoteViewCompositor
         public SpatialTranformHelper.Matrix4x4 viewTransform;
         public SpatialTranformHelper.Matrix4x4 projection;
         public SpatialTranformHelper.Matrix4x4 worldToCamera;
+
+        static public CameraMatrices Zero()
+        {
+            CameraMatrices cm = new CameraMatrices();
+            cm.viewTransform = SpatialTranformHelper.Matrix4x4.Zero;
+            cm.projection = SpatialTranformHelper.Matrix4x4.Zero;
+            cm.worldToCamera = SpatialTranformHelper.Matrix4x4.Zero;
+            return cm;
+        }
+
+        public bool IsSet
+        {
+            get
+            {
+                // we're going to check the diagonal of the viewTransform. it should not be empty
+                float ls = new Vector3(viewTransform.M00, viewTransform.M11, viewTransform.M22).sqrMagnitude;
+                return ls > 0;
+            }
+        }
     };
 
     public class CaptureEngine : IDisposable
